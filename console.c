@@ -18,16 +18,20 @@ int	msg_error(char *str)
 	return (1);
 }
 
-void	philo_state(unsigned long int time, int philo, char type)
+void	philo_state(unsigned long int time, int philo, char type, t_philo *p)
 {
-	if (type == 'F')
-		printf("%lu %d has taken a fork\n", time, philo);
-	else if (type == 'E')
-		printf("%lu %d is eating\n", time, philo);
-	else if (type == 'S')
-		printf("%lu %d is sleeping\n", time, philo);
-	else if (type == 'T')
-		printf("%lu %d is thinking\n", time, philo);
-	else if (type == 'D')
-		printf("%lu %d  died\n", time, philo);
+	(void) p;
+		if (type == 'F')
+			printf("%lums %d\thas taken a fork\n", time, philo);
+		else if (type == 'E')
+			printf("%lums %d\tis eating\n", time, philo);
+		else if (type == 'S')
+			printf("%lums %d\ttis sleeping\n", time, philo);
+		else if (type == 'T')
+			printf("%lums %d\tis thinking\n", time, philo);
+		else if (type == 'D')
+			{
+				printf("%lums %d\tdied\n", time, philo);
+				exit (0);
+			}
 }

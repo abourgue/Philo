@@ -12,10 +12,17 @@
 
 #include "inc/philo.h"
 
+int	thinking(t_philo *p)
+{
+	p->state = 'T';
+	philo_state((get_now() - p->g_start), p->id, p->state, p);
+	return (0);
+}
+
 int	sleeping(t_philo *p)
 {
 	p->state = 'S';
-	philo_state((get_now() - p->g_start), p->id, p->state);
+	philo_state((get_now() - p->g_start), p->id, p->state, p);
 	usleep(p->t_sleep * 1000);
 	return (0);
 }
@@ -23,7 +30,7 @@ int	sleeping(t_philo *p)
 int	eating(t_philo *p)
 {
 	p->state = 'E';
-	philo_state((get_now() - p->g_start), p->id, p->state);
+	philo_state((get_now() - p->g_start), p->id, p->state, p);
 	p->last_eat = get_now();
 	usleep(p->t_eat * 1000);
 	pthread_mutex_unlock(&p->fork[p->id - 1]);
@@ -41,24 +48,24 @@ void	get_fork(t_philo *p)
 		if (pthread_mutex_lock(&p->fork[p->id - 1]) == 0 && pthread_mutex_lock(&p->fork[0]) == 0)
 		{
 		p->state = 'F';
-		philo_state(get_now() - p->g_start, p->id, p->state);
-		philo_state(get_now() - p->g_start, p->id, p->state);
+		philo_state(get_now() - p->g_start, p->id, p->state, p);
+		philo_state(get_now() - p->g_start, p->id, p->state, p);
 		}
 		else
 		{
 		pthread_mutex_unlock(&p->fork[p->id - 1]);
-		pthread_mutex_lock(&p->fork[0]);
+		pthread_mutex_unlock(&p->fork[0]);
 		}
 	}
 	else if (pthread_mutex_lock(&p->fork[p->id - 1]) == 0 && pthread_mutex_lock(&p->fork[p->id]) == 0)
 	{
 		p->state = 'F';
-		philo_state(get_now() - p->g_start, p->id, p->state);
-		philo_state(get_now() - p->g_start, p->id, p->state);
+		philo_state(get_now() - p->g_start, p->id, p->state, p);
+		philo_state(get_now() - p->g_start, p->id, p->state, p);
 	}
 	else
 	{
 		pthread_mutex_unlock(&p->fork[p->id - 1]);
-		pthread_mutex_lock(&p->fork[p->id]);
+		pthread_mutex_unlock(&p->fork[p->id]);
 	}
 }

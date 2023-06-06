@@ -21,6 +21,22 @@ unsigned long int	get_now(void)
 	return ((now.tv_sec * 1000) + (now.tv_usec / 1000));
 }
 
+void	*dying(void *ph)
+{
+	t_philo	*p;
+
+	p = (t_philo *)ph;
+	while (p->state != 'D')
+	{
+		if (get_now() - p->last_eat >= p->t_die)
+			p->state = 'D';
+	}
+	if (pthread_mutex_lock(p->die) == 0)
+		philo_state(get_now() - p->g_start, p->id, p->state, ph);	
+	exit (0);
+	return (0);
+}
+
 int	create_philo(t_data *d, int i)
 {
 	d->philo[i].philo_start = get_now();
@@ -33,10 +49,13 @@ int	create_philo(t_data *d, int i)
 	d->philo[i].t_sleep = d->t_sleep;
 	d->philo[i].max = d->nb_philo;
 	d->philo[i].die = &d->died;
+	d->philo[i].mu = &d->mute;
 	d->philo[i].fork = d->forks;
 	pthread_mutex_init(&d->philo[i].fork[i], NULL);
-	if (pthread_create(&d->philo[i].p_thread, NULL, &routine, &d->philo[i]))
+	if (pthread_create(&d->philo[i].p_thread, NULL, &routine, &d->philo[i])
+		|| pthread_create(&d->philo[i].dying, NULL, &dying, &d->philo[i]))
 		return(msg_error("ERR util.c(35): pthread_create()"));
+	usleep(150);
 	return (0);
 }
 
@@ -50,22 +69,18 @@ void	init_data(t_data *d, char **value)
 	d->philo = malloc(sizeof(t_philo) * d->nb_philo);
 	d->forks = malloc(sizeof(pthread_mutex_t) * d->nb_philo);
 	pthread_mutex_init(&d->died, NULL);
+	pthread_mutex_init(&d->mute, NULL);
 }
 
 int exit_die(t_data *d, int index)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (pthread_mutex_lock(&d->died) == 0)
-	{
-		philo_state((get_now() - d->philo[index].g_start), d->philo[index].id,d->philo[index].state);
-	}	
-	while (i < d->nb_philo)
-	{
+		philo_state((get_now() - d->philo[index].g_start), d->philo[index].id,d->philo[index].state, d->philo);
+	while (++i < d->nb_philo)
 		pthread_mutex_destroy(&d->forks[i]);
-		i++;
-	}
 	pthread_mutex_destroy(&d->died);
 	// free(d->philo);
 	free(d->forks);

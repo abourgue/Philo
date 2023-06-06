@@ -15,6 +15,7 @@
 
 # include "philo.h"
 
+
 typedef struct s_philo
 {
 	int					id;
@@ -27,8 +28,10 @@ typedef struct s_philo
 	unsigned long int	t_sleep;
 	unsigned long int	t_die;
 	pthread_t		p_thread;
+	pthread_t		dying;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*die;
+	pthread_mutex_t	*mu;
 }	t_philo;
 
 typedef struct s_data
@@ -37,6 +40,7 @@ typedef struct s_data
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		died;
+	pthread_mutex_t		mute;
 	unsigned long int	t_eat;
 	unsigned long int	t_sleep;
 	unsigned long int	t_die;

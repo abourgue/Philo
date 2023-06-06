@@ -24,7 +24,7 @@ OBJS = $(SOURCES:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fsanitize=address -g
 
 G		= \033[0;90m #gray
 R		= \033[0;91m #red

@@ -27,27 +27,29 @@ int			check_val(int size, char **value);
 
 /*CONSOLE			*/
 int			msg_error(char *str);
-void		philo_state(unsigned long int time, int philo, char type);
+void		philo_state(unsigned long int time, int philo, char type, t_philo *p);
 
 /*LIB_ITOA			*/
-char		*zz_itoa(int n);
+char        *zz_itoa(int n);
 
 /*LIBFT				*/
-int			zz_strlen(char *s);
-int			ft_atoi(const char *str);
+int         zz_strlen(char *s);
+int         ft_atoi(const char *str);
 
 /*MAIN				*/
-void		*routine(void *philo);
+void        *routine(void *philo);
 
 /*STATE				*/
-int			sleeping(t_philo *p);
-int			eating(t_philo *p);
-void		get_fork(t_philo *p);
+int         thinking(t_philo *p);
+int         sleeping(t_philo *p);
+int         eating(t_philo *p);
+void        get_fork(t_philo *p);
 
 /*UTILS				*/
+void	            *dying(void *ph);
 unsigned long int	get_now(void);
-int			create_philo(t_data *d, int index);
-void		init_data(t_data *d, char **value);
-int			exit_die(t_data *d, int index);
+int		            create_philo(t_data *d, int index);
+void	            init_data(t_data *d, char **value);
+int		            exit_die(t_data *d, int index);
 
 #endif

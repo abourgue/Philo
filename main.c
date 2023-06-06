@@ -22,17 +22,11 @@ void	*routine(void *philo)
 		while (p->state != 'F')
 			get_fork(p);
 		if (p->state == 'F')
-		{
-			if (eating(p))
-				p->state = 'D';
-		}
+			eating(p);
 		if (p->state == 'E')
-		{
-			if (sleeping(p))
-				p->state = 'D';
-		}
-		if (get_now() - p->last_eat >= p->t_die)
-			p->state = 'D';
+			sleeping(p);
+		if (p->state == 'S')
+			thinking(p);
 	}
 	return (0);
 }
@@ -54,17 +48,18 @@ int	main(int argc, char **argv)
 			return (1);
 	}
 	i = 0;
-	while (i <= data.nb_philo)
+	while (1)
 	{
-		if (i == data.nb_philo)
-			i = 0;
-		if (data.philo[i].state == 'D' || get_now() - data.philo[i].last_eat >= data.t_die * 1000)
-		{
-			data.philo[i].state = 'D';
-			exit_die(&data, i);
-		}
-		else
-			i++;
+		// if (i == data.nb_philo)
+		// 	i = 0;
+		// if (data.philo[i].state == 'D' || get_now() - data.philo[i].last_eat >= data.t_die * 1000)
+		// {
+		// 	data.philo[i].state = 'D';
+		// 	exit_die(&data, i);
+		// }
+		// else
+		// 	i++;
+		i++;
 	}
 	return (0);
 }

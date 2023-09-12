@@ -6,25 +6,20 @@
 #    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 15:32:24 by abourgue          #+#    #+#              #
-#    Updated: 2023/06/06 05:02:03 by abourgue         ###   ########.fr        #
+#    Updated: 2023/09/12 13:58:07 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC_DIR = ./
-
-SRC = \
-	main.c console.c check_args.c libft.c utils.c \
-	lib_itoa.c state.c
+SRC_DIR = src/
+SRC = check_args.c libft.c main.c utils.c activity.c \
 
 SOURCES = $(addprefix $(SRC_DIR), $(SRC))
-
 OBJS = $(SOURCES:.c=.o)
 
 CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 G		= \033[0;90m #gray
 R		= \033[0;91m #red
@@ -40,17 +35,16 @@ BG_G		= \033[42m #bg_g
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "${GR}"
-	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+	${CC} ${CFLAGS} ${OBJS}  -o ${NAME}
 
 %.o: %.c
-	@$(CC) -c $(CFLAGS) -c $< -o $@
+	$(CC) -c $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo fclean: OK
+	rm -f $(NAME)
+	echo fclean: OK
 
 re: fclean all

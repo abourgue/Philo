@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/06/06 07:21:05 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/11 14:42:03 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,27 @@
 # include "philo.h"
 
 
-typedef struct s_philo
+typedef struct rules
 {
-	int					id;
-	char				state;
-	int					max;
-	unsigned long int	last_eat;
-	unsigned long int	philo_start;
-	unsigned long int	g_start;
-	unsigned long int 	t_eat;
-	unsigned long int	t_sleep;
-	unsigned long int	t_die;
-	pthread_t		p_thread;
-	pthread_t		dying;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	*die;
-	pthread_mutex_t	*mu;
-}	t_philo;
+	int		nb_philo;
+	int		t_death;
+	int		t_eat;
+	int		t_sleep;
+	int		t_think;
+	int		nb_eat;
+}			t_rules;
 
-typedef struct s_data
+typedef struct philo
 {
-	int					nb_philo;
-	t_philo				*philo;
-	pthread_mutex_t		*forks;
-	pthread_mutex_t		died;
-	pthread_mutex_t		mute;
-	unsigned long int	t_eat;
-	unsigned long int	t_sleep;
-	unsigned long int	t_die;
-	unsigned long int	t_start;
-}	t_data;
+	int				id;
+	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_t		thread_id;
+	int				last_meal;
+	int				philo_ate;
+	int				dead;
+	int				nbe;
+	t_rules			*rules;
+}					t_philo;
 
 #endif

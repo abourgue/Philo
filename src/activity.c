@@ -6,28 +6,38 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:25:04 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/11 16:29:19 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:03:07 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+int	check_state(t_philo *p)
+{
+	pthread_mutex_lock(&(p->rules->runningMutex));
+	p->running = p->rules->running;
+	pthread_mutex_unlock(&(p->rules->runningMutex));
+	if (p->running)
+		return (0);
+	return (1);
+}
+
 void	psleep(t_philo *p)
 {
-	if (p->dead == 1)
-		return ;
+	if (check_state(p))
+		return;
 	printf("%d %d is sleeping\n", ft_time(), p->id);
 	usleep(p->rules->t_sleep);
 }
 
 void	eat(t_philo *p)
 {
-	if (p->dead == 1)
+	if (check_state(p))
 		return ;
 	printf("%d %d is thinking\n", ft_time(), p->id);
 	pthread_mutex_lock(&p->left_fork);
 	pthread_mutex_lock(p->right_fork);
-	if (p->dead == 1)
+	if (check_state(p))
 		return ;
 	printf("%d %d has taken a fork\n", ft_time(), p->id);
 	printf("%d %d is eating\n", ft_time(), p->id);
@@ -45,8 +55,9 @@ void	check_eat(t_philo *p)
 		eat(p);
 		if (p->nbe == p->rules->nb_eat)
 		{
-			usleep(p->rules->t_death);
-			p->dead = 1;
+			pthread_mutex_lock(&(p->rules->runningMutex));
+			p->rules->running = 0;
+			pthread_mutex_unlock(&(p->rules->runningMutex));
 		}
 	}
 }

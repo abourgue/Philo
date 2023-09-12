@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 04:17:30 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/12 13:46:21 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:02:29 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	create_philo(t_philo *p)
 		p[i].id = i;
 		p[i].dead = 0;
 		p[i].nbe = 0;
+		p[i].running = 1;
 		pthread_create(&p[i].thread_id, NULL, routine, &p[i]);
 		usleep(100);
 	}
@@ -52,6 +53,7 @@ int	ft_time(void)
 void	init_rules(t_philo *p, int ac, char **av)
 {
 	p->rules = malloc(sizeof(t_rules));
+	p->rules->running = 1;
 	p->rules->nb_philo = ft_atoi(av[1]);
 	if (p->rules->nb_philo == 1)
 	{
@@ -74,6 +76,7 @@ void	init_mut(t_philo *p, int np)
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(&(p->rules->runningMutex), NULL);
 	pthread_mutex_init(&p[i].left_fork, NULL);
 	while (++i < np)
 	{

@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 03:23:43 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/12 13:56:35 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:03:26 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ void	*routine(void *arg)
 	t_philo	*p;
 
 	p = (t_philo *) arg;
-	while (p->dead == 0)
+	while (p->running)
 	{
 		check_eat(p);
 		psleep(p);
-		if ((ft_time() - p->last_meal) > p->rules->t_death)
+		if ((ft_time() - p->last_meal) > p->rules->t_death && p->running)
 		{
-			if (p->dead == 0)
+			pthread_mutex_lock(&(p->rules->runningMutex));
+			if (p->rules->running == 1)
 			{
-				p->dead = 1;
+				p->rules->running = 0;
 				printf("%d %d died\n", ft_time(), p->id);
-			}
-			break ;
+				
+			}			
+			pthread_mutex_unlock(&(p->rules->runningMutex));
 		}
 	}
+	
 	return (NULL);
 }
 
@@ -49,41 +52,38 @@ int	main(int argc, char **argv)
 	init_mut(p, p->rules->nb_philo);
 	ft_time();
 	create_philo(p);
-	while (1)
-		checker(p);
+	checker(p);
 	return (0);
 }
 
 void	checker(t_philo *p)
 {
-	int	i;
-
-	i = 0;
 	while (1)
 	{
-		if (p[i].dead == 1)
+		pthread_mutex_lock(&(p->rules->runningMutex));
+		if (p->rules->running == 0)
 		{
-			i = 0;
-			while (i < p->rules->nb_philo)
-				p[i++].dead = 1;
-			end(p);
+			end(p); 
+			break;
 		}
-		if (i == p->rules->nb_philo)
-			i = 0;
-		else
-			i++;
+		pthread_mutex_unlock(&(p->rules->runningMutex));
 	}
 }
 
 void	end(t_philo *p)
 {
 	int		i;
-	int		nb;
-
-	i = 0;
-	nb = p->rules->nb_philo;
-	while (++i < nb)
+	void	**ret;
+	
+	ret = NULL;
+	i = -1;
+	pthread_mutex_unlock(&(p->rules->runningMutex));
+	while (++i < p->rules->nb_philo)
+	{
 		pthread_mutex_destroy(&p[i].left_fork);
+		pthread_join(p[i].thread_id, ret);
+	}
+	pthread_mutex_destroy(&(p->rules->runningMutex));
 	free(p->rules);
 	free(p);
 	exit(0);

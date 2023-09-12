@@ -6,7 +6,7 @@
 #    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 15:32:24 by abourgue          #+#    #+#              #
-#    Updated: 2023/09/12 13:58:07 by abourgue         ###   ########.fr        #
+#    Updated: 2023/09/12 17:07:54 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SOURCES = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g3
 
 G		= \033[0;90m #gray
 R		= \033[0;91m #red

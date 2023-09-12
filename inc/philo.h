@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/12 13:57:39 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:57:37 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		end(t_philo *p);
 int			msg_error(char *str);
 
 /*ACTIVITY			*/
+int			check_state(t_philo *p);
 void		psleep(t_philo *p);
 void		check_eat(t_philo *p);
 

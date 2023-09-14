@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 03:23:43 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/12 20:03:26 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:58:45 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ void	*routine(void *arg)
 			{
 				p->rules->running = 0;
 				printf("%d %d died\n", ft_time(), p->id);
-				
-			}			
+			}
 			pthread_mutex_unlock(&(p->rules->runningMutex));
 		}
 	}
-	
 	return (NULL);
 }
 
@@ -63,8 +61,8 @@ void	checker(t_philo *p)
 		pthread_mutex_lock(&(p->rules->runningMutex));
 		if (p->rules->running == 0)
 		{
-			end(p); 
-			break;
+			end(p);
+			break ;
 		}
 		pthread_mutex_unlock(&(p->rules->runningMutex));
 	}
@@ -74,7 +72,7 @@ void	end(t_philo *p)
 {
 	int		i;
 	void	**ret;
-	
+
 	ret = NULL;
 	i = -1;
 	pthread_mutex_unlock(&(p->rules->runningMutex));

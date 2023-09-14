@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:25:04 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/12 20:03:07 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:56:33 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_state(t_philo *p)
 void	psleep(t_philo *p)
 {
 	if (check_state(p))
-		return;
+		return ;
 	printf("%d %d is sleeping\n", ft_time(), p->id);
 	usleep(p->rules->t_sleep);
 }

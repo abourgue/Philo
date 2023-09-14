@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 04:17:30 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/12 20:02:29 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:59:52 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create_philo(t_philo *p)
 		p[i].nbe = 0;
 		p[i].running = 1;
 		pthread_create(&p[i].thread_id, NULL, routine, &p[i]);
-		usleep(100);
+		usleep(500);
 	}
 }
 

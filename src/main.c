@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 03:23:43 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 16:58:45 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:28:42 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	main(int argc, char **argv)
 		return (1);
 	init_rules(p, argc, argv);
 	init_mut(p, p->rules->nb_philo);
-	ft_time();
 	create_philo(p);
 	checker(p);
 	return (0);

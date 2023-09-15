@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:25:04 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 16:56:33 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:20:33 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	eat(t_philo *p)
 	if (check_state(p))
 		return ;
 	printf("%d %d is thinking\n", ft_time(), p->id);
-	pthread_mutex_lock(&p->left_fork);
 	pthread_mutex_lock(p->right_fork);
+	pthread_mutex_lock(&p->left_fork);
 	if (check_state(p))
 		return ;
 	printf("%d %d has taken a fork\n", ft_time(), p->id);
@@ -44,8 +44,8 @@ void	eat(t_philo *p)
 	p->last_meal = ft_time();
 	p->nbe++;
 	usleep(p->rules->t_eat);
-	pthread_mutex_unlock(&p->left_fork);
 	pthread_mutex_unlock(p->right_fork);
+	pthread_mutex_unlock(&p->left_fork);
 }
 
 void	check_eat(t_philo *p)

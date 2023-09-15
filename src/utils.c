@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 04:17:30 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 16:59:52 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:33:38 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	create_philo(t_philo *p)
 	int	i;
 
 	i = -1;
+	ft_time();
 	while (++i < p->rules->nb_philo)
 	{
 		p[i].last_meal = 0;
@@ -26,7 +27,7 @@ void	create_philo(t_philo *p)
 		p[i].nbe = 0;
 		p[i].running = 1;
 		pthread_create(&p[i].thread_id, NULL, routine, &p[i]);
-		usleep(500);
+		usleep(10);
 	}
 }
 
@@ -44,7 +45,7 @@ static int	init_time(void)
 int	ft_time(void)
 {
 	static int	time;
-
+	
 	if (time == 0)
 		time = init_time();
 	return (init_time() - time);

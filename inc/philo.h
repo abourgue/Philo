@@ -6,12 +6,12 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/15 01:59:40 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:10:59 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROTO_H
-# define PROTO_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -26,8 +26,8 @@
 int			check_val(int size, char **value);
 
 /*LIBFT				*/
-int         zz_strlen(char *s);
-int         ft_atoi(const char *str);
+int			zz_strlen(char *s);
+int			ft_atoi(const char *str);
 void		print(t_philo *p, char *state);
 
 /*ACTIVITY			*/

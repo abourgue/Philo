@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 03:23:43 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/15 01:57:54 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:11:53 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ int	main(int argc, char **argv)
 	end(table);
 	return (0);
 }
-

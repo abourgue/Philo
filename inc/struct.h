@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/15 02:19:19 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:13:41 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_philo
 typedef struct s_control
 {
 	int				nb_philo;
-	long long		t_init;
+	long long		ts;
 	long long		t_die;
 	long long		t_eat;
 	long long		t_sleep;

@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 22:57:15 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 23:14:21 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:15:17 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ long long	timestamp(t_control *table)
 	struct timeval	current;
 
 	gettimeofday(&current, 0);
-	return (((current.tv_sec * 1000) + (current.tv_usec / 1000)) - table->t_init);
+	return (((current.tv_sec * 1000) + (current.tv_usec / 1000)) - table->ts);
 }
 
 void	ft_sleep(t_philo *p, int t_wait)

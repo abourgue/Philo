@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 04:17:30 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/15 02:24:06 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:14:19 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ void	init_table(char **argv, t_control *table)
 	while (++i < table->nb_philo)
 		pthread_mutex_init(&table->fork[i], 0);
 	init_philo(table);
-	table->t_init = start_time();
+	table->ts = start_time();
 }
-

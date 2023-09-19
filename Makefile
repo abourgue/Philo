@@ -6,14 +6,14 @@
 #    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 15:32:24 by abourgue          #+#    #+#              #
-#    Updated: 2023/09/14 17:42:36 by abourgue         ###   ########.fr        #
+#    Updated: 2023/09/15 02:22:36 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRC_DIR = src/
-SRC = check_args.c libft.c main.c utils.c activity.c \
+SRC = check_args.c libft.c main.c init.c activity.c philocontrol.c time.c\
 
 SOURCES = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SOURCES:.c=.o)

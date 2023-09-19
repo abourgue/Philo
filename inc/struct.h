@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/12 19:09:07 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/15 02:19:19 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,35 @@
 
 # include "philo.h"
 
+typedef struct s_control	t_control;
+typedef struct s_philo		t_philo;
 
-typedef struct rules
+typedef struct s_philo
 {
-	int					nb_philo;
-	int					t_death;
-	int					t_eat;
-	int					t_sleep;
-	int					t_think;
-	int					nb_eat;
-	int					running;
-	pthread_mutex_t		runningMutex;
-	pthread_mutex_t		deathMutex;
-}			t_rules;
+	pthread_t	tid;
+	int			id;
+	int			meals;
+	long long	t_lastmeal;
+	int			l_fork;
+	int			r_fork;
+	t_control	*table;
+}	t_philo;
 
-typedef struct philo
+typedef struct s_control
 {
-	int				id;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_t		thread_id;
-	int				last_meal;
-	int				philo_ate;
-	int				dead;
-	int				nbe;
-	int				running;
-	t_rules			*rules;
-}					t_philo;
+	int				nb_philo;
+	long long		t_init;
+	long long		t_die;
+	long long		t_eat;
+	long long		t_sleep;
+	int				max_meals;
+	t_philo			*philo;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	cout;
+	pthread_mutex_t	checker;
+	int				error;
+	int				end_meal;
+	int				game_over;
+}	t_control;
 
 #endif

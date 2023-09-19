@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 03:42:36 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 16:57:09 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:19:26 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ int	ft_atoi(const char *str)
 		lst++;
 	}
 	return (res * neg);
+}
+
+void	print(t_philo *p, char *state)
+{
+	if (p->table->game_over == 0)
+	{
+		pthread_mutex_lock(&p->table->cout);
+		printf("%lld\t%d\t%s\n", timestamp(p->table), p->id, state);
+		pthread_mutex_unlock(&p->table->cout);
+	}
 }

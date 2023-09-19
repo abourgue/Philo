@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:14:25 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/12 19:57:37 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/15 01:59:40 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,24 @@ int			check_val(int size, char **value);
 /*LIBFT				*/
 int         zz_strlen(char *s);
 int         ft_atoi(const char *str);
-
-/*MAIN				*/
-void        *routine(void *philo);
-void		checker(t_philo *p);
-void		end(t_philo *p);
-int			msg_error(char *str);
+void		print(t_philo *p, char *state);
 
 /*ACTIVITY			*/
-int			check_state(t_philo *p);
-void		psleep(t_philo *p);
-void		check_eat(t_philo *p);
+void		*one_philo(void *p);
+void		eat(t_philo *ph);
+void		think(t_philo *ph);
+void		psleep(t_philo *ph);
 
-/*UTILS				*/
-void				create_philo(t_philo *p);
-int					ft_time(void);
-void	            init_rules(t_philo *p, int ac, char **av);
-void				init_mut(t_philo *p, int np);
+/*PHILOCONTROL		*/
+void		dining(t_control *table);
+void		end(t_control *input);
+
+/*TIME				*/
+long long	start_time(void);
+long long	timestamp(t_control *table);
+void		ft_sleep(t_philo *p, int t_wait);
+
+/*init				*/
+void		init_table(char **argv, t_control *table);
 
 #endif

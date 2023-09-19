@@ -6,58 +6,58 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:25:04 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/14 19:20:33 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/15 02:22:12 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	check_state(t_philo *p)
+void	*one_philo(void *p)
 {
-	pthread_mutex_lock(&(p->rules->runningMutex));
-	p->running = p->rules->running;
-	pthread_mutex_unlock(&(p->rules->runningMutex));
-	if (p->running)
-		return (0);
-	return (1);
+	t_philo	*ph;
+
+	ph = (t_philo *)p;
+	pthread_mutex_lock(&ph->table->fork[ph->l_fork]);
+	print(ph, "has taken a fork");
+	pthread_mutex_lock(&ph->table->checker);
+	ph->t_lastmeal = timestamp(ph->table);
+	pthread_mutex_unlock(&ph->table->checker);
+	ft_sleep(ph, ph->table->t_die);
+	print(ph, "died ");
+	ph->table->game_over = 0;
+	return (0);
 }
 
-void	psleep(t_philo *p)
+void	eat(t_philo *ph)
 {
-	if (check_state(p))
-		return ;
-	printf("%d %d is sleeping\n", ft_time(), p->id);
-	usleep(p->rules->t_sleep);
-}
-
-void	eat(t_philo *p)
-{
-	if (check_state(p))
-		return ;
-	printf("%d %d is thinking\n", ft_time(), p->id);
-	pthread_mutex_lock(p->right_fork);
-	pthread_mutex_lock(&p->left_fork);
-	if (check_state(p))
-		return ;
-	printf("%d %d has taken a fork\n", ft_time(), p->id);
-	printf("%d %d is eating\n", ft_time(), p->id);
-	p->last_meal = ft_time();
-	p->nbe++;
-	usleep(p->rules->t_eat);
-	pthread_mutex_unlock(p->right_fork);
-	pthread_mutex_unlock(&p->left_fork);
-}
-
-void	check_eat(t_philo *p)
-{
-	if (p->nbe != p->rules->nb_eat || p->rules->nb_eat == -1)
+	if (ph->table->game_over == 0)
 	{
-		eat(p);
-		if (p->nbe == p->rules->nb_eat)
-		{
-			pthread_mutex_lock(&(p->rules->runningMutex));
-			p->rules->running = 0;
-			pthread_mutex_unlock(&(p->rules->runningMutex));
-		}
+		pthread_mutex_lock(&ph->table->fork[ph->l_fork]);
+		print(ph, "has taken a fork");
+		pthread_mutex_lock(&ph->table->fork[ph->r_fork]);
+		print(ph, "has taken a fork");
+		print(ph, "is eating");
+		pthread_mutex_lock(&ph->table->checker);
+		ph->t_lastmeal = timestamp(ph->table);
+		pthread_mutex_unlock(&ph->table->checker);
+		ph->meals += 1;
+		ft_sleep(ph, ph->table->t_eat);
+		pthread_mutex_unlock(&ph->table->fork[ph->l_fork]);
+		pthread_mutex_unlock(&ph->table->fork[ph->r_fork]);
+	}
+}
+
+void	think(t_philo *ph)
+{
+	if (ph->table->game_over == 0)
+		print(ph, "is thinking");
+}
+
+void	psleep(t_philo *ph)
+{
+	if (ph->table->game_over == 0)
+	{
+		print(ph, "is sleeping");
+		ft_sleep(ph, ph->table->t_sleep);
 	}
 }
